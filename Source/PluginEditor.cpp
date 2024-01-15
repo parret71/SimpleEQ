@@ -141,7 +141,7 @@ juce::String RotarySliderWithLabels::getDisplayString() const
 	}
 	else
 	{
-		jassertfalse; //this shouldn't happen!
+		jassertfalse; // this shouldn't happen!
 	}
 
 	if (suffix.isNotEmpty())
@@ -167,7 +167,7 @@ ResponseCurveComponent::ResponseCurveComponent(SimpleEQAudioProcessor& p) : audi
 	}
 
 	/*
-	48000 / 2048 = 23hz
+	 48000 / 2048 = 23hz
 	*/
 
 	leftChannelFFTDataGenerator.changeOrder(FFTOrder::order2048);
@@ -220,7 +220,7 @@ void ResponseCurveComponent::timerCallback()
 	const auto fftSize = leftChannelFFTDataGenerator.getFFTSize();
 
 	/*
-	48000 / 2048 = 23hz <- this is the bin width
+	 48000 / 2048 = 23hz <- this is the bin width
 	*/
 
 	const auto binWidth = audioProcessor.getSampleRate() / (double)fftSize;
@@ -248,9 +248,9 @@ void ResponseCurveComponent::timerCallback()
 	if (parametersChanged.compareAndSetBool(false, true))
 	{
 		DBG("params changed");
-		//update the monochain
+		// update the monochain
 		updateChain();
-		//signal a repaint
+		// signal a repaint
 		//repaint();
 	}
 
@@ -339,7 +339,9 @@ void ResponseCurveComponent::paint(juce::Graphics& g)
 		responseCurve.lineTo(responseArea.getX() + i, map(mags[i]));
 	}
 
-	g.setColour(Colours::blue);
+	leftChannelFFTPath.applyTransform(AffineTransform().translation(responseArea.getX(), responseArea.getY()));
+
+	g.setColour(Colours::skyblue);
 	g.strokePath(leftChannelFFTPath, PathStrokeType(1.f));
 
 	g.setColour(Colours::orange);

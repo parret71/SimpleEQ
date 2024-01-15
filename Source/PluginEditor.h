@@ -21,8 +21,8 @@ enum FFTOrder
 template<typename BlockType>
 struct FFTDataGenerator
 {
-	/**
-	 produces the FFT data from an audio buffer.
+	/*
+	  produces the FFT data from an audio buffer.
 	 */
 	void produceFFTDataForRendering(const juce::AudioBuffer<float>& audioData, const float negativeInfinity)
 	{
@@ -40,11 +40,11 @@ struct FFTDataGenerator
 
 		int numBins = (int)fftSize / 2;
 
-		//normalize the fft values.
+		// normalize the fft values.
 		for (int i = 0; i < numBins; ++i)
 		{
 			auto v = fftData[i];
-			//            fftData[i] /= (float) numBins;
+			//fftData[i] /= (float) numBins;
 			if (!std::isinf(v) && !std::isnan(v))
 			{
 				v /= float(numBins);
@@ -56,7 +56,7 @@ struct FFTDataGenerator
 			fftData[i] = v;
 		}
 
-		//convert them to decibels
+		// convert them to decibels
 		for (int i = 0; i < numBins; ++i)
 		{
 			fftData[i] = juce::Decibels::gainToDecibels(fftData[i], negativeInfinity);
@@ -67,9 +67,9 @@ struct FFTDataGenerator
 
 	void changeOrder(FFTOrder newOrder)
 	{
-		//when you change order, recreate the window, forwardFFT, fifo, fftData
-		//also reset the fifoIndex
-		//things that need recreating should be created on the heap via std::make_unique<>
+		// when you change order, recreate the window, forwardFFT, fifo, fftData
+		// also reset the fifoIndex
+		// things that need recreating should be created on the heap via std::make_unique<>
 
 		order = newOrder;
 		auto fftSize = getFFTSize();
@@ -100,7 +100,7 @@ template<typename PathType>
 struct AnalyzerPathGenerator
 {
 	/*
-	 converts 'renderData[]' into a juce::Path
+	  converts 'renderData[]' into a juce::Path
 	 */
 	void generatePath(const std::vector<float>& renderData,
 		juce::Rectangle<float> fftBounds,
@@ -126,19 +126,19 @@ struct AnalyzerPathGenerator
 
 		auto y = map(renderData[0]);
 
-		//        jassert( !std::isnan(y) && !std::isinf(y) );
+		//jassert( !std::isnan(y) && !std::isinf(y) );
 		if (std::isnan(y) || std::isinf(y))
 			y = bottom;
 
 		p.startNewSubPath(0, y);
 
-		const int pathResolution = 2; //you can draw line-to's every 'pathResolution' pixels.
+		const int pathResolution = 2; // you can draw line-to's every 'pathResolution' pixels.
 
 		for (int binNum = 1; binNum < numBins; binNum += pathResolution)
 		{
 			y = map(renderData[binNum]);
 
-			//            jassert( !std::isnan(y) && !std::isinf(y) );
+			//jassert( !std::isnan(y) && !std::isinf(y) );
 
 			if (!std::isnan(y) && !std::isinf(y))
 			{
@@ -243,7 +243,7 @@ private:
 };
 
 //==============================================================================
-/**
+/*
 */
 class SimpleEQAudioProcessorEditor : public juce::AudioProcessorEditor
 {

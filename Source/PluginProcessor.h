@@ -22,9 +22,9 @@ struct Fifo
 		{
 			buffer.setSize(numChannels,
 				numSamples,
-				false,   //clear everything?
-				true,    //including the extra space?
-				true);   //avoid reallocating if you can?
+				false,   // clear everything?
+				true,    // including the extra space?
+				true);   // avoid reallocating if you can?
 			buffer.clear();
 		}
 	}
@@ -75,8 +75,8 @@ private:
 
 enum Channel
 {
-	Right, //effectively 0
-	Left //effectively 1
+	Right, // effectively 0
+	Left // effectively 1
 };
 
 template<typename BlockType>
@@ -104,11 +104,11 @@ struct SingleChannelSampleFifo
 		prepared.set(false);
 		size.set(bufferSize);
 
-		bufferToFill.setSize(1,		//channel
-			bufferSize,				//num samples
-			false,					//keepExistingContent
-			true,					//clear extra space
-			true);					//avoid reallocating
+		bufferToFill.setSize(1,		// channel
+			bufferSize,				// num samples
+			false,					// keepExistingContent
+			true,					// clear extra space
+			true);					// avoid reallocating
 		audioBufferFifo.prepare(1, bufferSize);
 		fifoIndex = 0;
 		prepared.set(true);
@@ -222,7 +222,7 @@ inline auto makeHighCutFilter(const ChainSettings& chainSettings, double sampleR
 }
 
 //==============================================================================
-/**
+/*
 */
 class SimpleEQAudioProcessor : public juce::AudioProcessor
 #if JucePlugin_Enable_ARA
